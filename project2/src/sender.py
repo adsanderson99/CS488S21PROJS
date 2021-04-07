@@ -3,6 +3,7 @@
 #!/usr/bin/env python
 from socket import *
 import sys
+import struct
 
 s = socket(AF_INET,SOCK_DGRAM)
 host =sys.argv[1]
@@ -13,14 +14,21 @@ addr = (host,port)
 
 number_of_lines = len(sys.stdin.readlines( ))
 count = 0
+ack = true
 
-#!f=open("a.txt","rb")
 while(count < number_of_lines):
   f=sys.stdin.readlines(count)
   data = f
-  while (data):
-      if(s.sendto(data,addr)):
+  f.pack(count)
+  while (data && ack):
+    (count)
+      if(f.sendto(data,addr)):
           print("sending ...")
-          data = f.read(buf)
+          data = f.read(buf) 
+      if(s.recvfrom(buf)):
+        ack = true
+      else:
+        ack = false
 s.close()
 f.close()
+print("File sent, exiting.")
